@@ -114,6 +114,10 @@ module Carter
         persist_cart
         cart.add_item(cartable, quantity, owner)
       end
+
+      def remove_cartable_from_cart(cartable, quantity = 1, owner = nil)
+        cart.remove_item(cartable, quantity, owner)
+      end
       
       def persist_cart
         cart.save

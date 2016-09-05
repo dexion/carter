@@ -21,6 +21,17 @@ class Cart < ActiveRecord::Base
       end
     end
   end
+
+  def remove_item(cartable, quantity = 1, owner=nil)
+    existing_cart_item = cart_item_for_cartable_and_owner(cartable, owner)
+    Cart.transaction do
+      if existing_cart_item.quantity > quantity
+          existing_cart_item.update_attributes(:quantity => existing_cart_item.quantity - quantity)
+      else
+        existing_cart_item.destroy
+      end
+    end
+  end
   
   # TODO cache this value
   def total
